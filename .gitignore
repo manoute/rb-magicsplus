@@ -1,0 +1,11 @@
+*.ps
+*.pdf
+*.swp
+*~
+.yardoc
+*.gem
+/pkg
+/doc
+*.rbc
+*.gemspec
+.autotest
