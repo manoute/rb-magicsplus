@@ -44,10 +44,10 @@ unless find_header('magics_api.h')
   abort "Can't find headers file magics_api.h..."
 end
 
-$CFLAGS = `pkg-config --cflags magics`
-$LDFLAGS = `pkg-config --libs magics`
-#$LDFLAGS = `magics-config --libs`
-#$CFLAGS = `magics-config --cxxflags`
+#$CFLAGS = `pkg-config --cflags magics`
+#$LDFLAGS = `pkg-config --libs magics`
+$LDFLAGS = `magics-config --libs`
+$CPPFLAGS = `magics-config --cxxflags`
 
 
 create_makefile("rmagics_raw")

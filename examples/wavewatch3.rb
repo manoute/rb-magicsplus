@@ -85,6 +85,6 @@ class WW3
 end
 
 toto = WW3.new
-toto.fetch_grib_file
+#toto.fetch_grib_file
 toto.plot_grib_file
 

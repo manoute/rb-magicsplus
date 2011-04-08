@@ -16,10 +16,17 @@ class RMagicsRawCWriter
   end
 
   def simple_func_list
-    %w{ open close coast grib test odb bufr legend import netcdf cont 
-      obs raw image plot text wind symb boxplot pie graph axis geo 
-      eps print info 
-    }
+    if (`magics-config --version` =~ /2.12/)
+      %w{ open close coast grib test odb bufr legend import netcdf cont 
+        obs raw image plot text wind symb boxplot pie graph axis geo 
+        eps print info 
+      }
+    else
+      %w{ open close coast grib test odb import netcdf cont 
+        obs raw image plot text wind symb boxplot pie graph axis geo 
+        eps print info 
+      }
+    end
   end
   
   def one_string_arg_func(func)

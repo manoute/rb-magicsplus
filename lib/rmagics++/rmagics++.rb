@@ -60,10 +60,6 @@ module MagicsPlus
       self
     end
 
-    def set1c(str,sa)
-      array_check(ary)
-    end
-
     Raw.methods.each do |f|
       if f =~ /^mag_set(.*)$/ && !self.respond_to?("set#{$1}".to_sym) 
         define_method("set#{$1}".to_sym) do |*args|
