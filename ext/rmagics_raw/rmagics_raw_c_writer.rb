@@ -137,11 +137,11 @@ class RMagicsRawCWriter
 
   def narray_2d_func(func,type)
     <<-"# # #".gsub(/^\s{6}/,"")
-      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE na1value)
+      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE na2value)
       {
         mag_#{func} (StringValuePtr(param), 
-          NA_PTR_TYPE(na1value, #{type}*), 
-          NA_SHAPE0(na1value), NA_SHAPE1(na1value));
+          NA_PTR_TYPE(na2value, #{type}*), 
+          NA_SHAPE0(na2value), NA_SHAPE1(na2value));
         return self;
       }
 
