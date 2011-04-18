@@ -26,3 +26,57 @@ RSpec::Matchers.define :be_the_same_ps_file do |file1|
     "expected file #{file} to be different from #{file1}"
   end
 end
+
+def set1d_helper(options)
+  MagicsPlus::Base.open do |m|
+    m.page_id_line = 'off'
+    m.output_fullname = options[:output_file]
+    m.subpage_lower_left_latitude = 30.0
+    m.subpage_lower_left_longitude = -20.0
+    m.subpage_upper_right_latitude = 70.0
+    m.subpage_upper_right_longitude = 30.0
+    m.symbol_type = 'marker'
+    m.symbol_height = 1.5
+    m.symbol_input_y_position = options[:ypos]
+    m.symbol_input_x_position = options[:xpos]
+    m.symbol_input_marker_list = options[:markers]
+    m.symb
+    m.coast
+  end
+end
+
+def set2d_helper(options)
+  MagicsPlus::Base.open do |m|
+    m.page_id_line = 'off'
+    m.output_fullname = options[:output_file]
+    m.subpage_lower_left_latitude = 30.0
+    m.subpage_lower_left_longitude = -20.0
+    m.subpage_upper_right_latitude = 70.0
+    m.subpage_upper_right_longitude = 30.0
+
+    m.input_field_initial_longitude = -180.0
+    m.input_field_longitude_step = 1.0
+    m.input_field_initial_latitude = -90.0
+    m.input_field_latitude_step = 1.0
+
+    m.input_field = options[:data]
+
+    m.contour = "off"
+    m.contour_label = "off"
+    m.contour_shade = "on"
+    m.contour_shade_method = "area_fill"
+
+    levels = 360.times.inject([]) {|a,e| a << (160.0 + e/4.0)}
+    colors = 360.times.inject([]) {|a,e| a << "HSL(#{e}, 0.5, 0.5)"}
+
+    m.contour_level_selection_type =  "level_list"
+    m.contour_shade = "on"
+    m.contour_shade_method = "area_fill"
+    m.contour_shade_colour_method = "list"
+    m.contour_level_list =  levels
+    m.contour_shade_colour_list = colors
+
+    m.cont 
+    m.coast
+  end
+end

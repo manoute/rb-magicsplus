@@ -1,7 +1,8 @@
+# Write rmagics_raw.c that is used by extconf to build rmagics_raw.so
 class RMagicsRawCWriter
-  def initialize  
+  def initialize(with_narray = true)  
     @c_file = File.join(File.dirname(__FILE__),'rmagics_raw.c')
-    
+    @with_narray = with_narray
   end
   
   def simple_func(func)
@@ -113,6 +114,51 @@ class RMagicsRawCWriter
     %Q|  rb_define_module_function(mMagicsRaw, "mag_#{func}_array", r_#{func}_array, 3);\n|
   end
 
+  def narray_1d_func(func,type)
+    <<-"# # #".gsub(/^\s{6}/,"")
+      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE na1value)
+      {
+        mag_#{func} (StringValuePtr(param), 
+          NA_PTR_TYPE(na1value, #{type}*), NA_SHAPE0(na1value));
+        return self;
+      }
+
+      # # #
+  end
+
+
+  def narray_1d_functions
+    {'set1i' => 'int', 'set1r' => 'double'}
+  end
+
+  def narray_1D_define_method(func)
+    %Q|  rb_define_module_function(mMagicsRaw, "mag_#{func}_narray", r_#{func}_narray, 2);\n|
+  end
+
+  def narray_2d_func(func,type)
+    <<-"# # #".gsub(/^\s{6}/,"")
+      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE na1value)
+      {
+        mag_#{func} (StringValuePtr(param), 
+          NA_PTR_TYPE(na1value, #{type}*), 
+          NA_SHAPE0(na1value), NA_SHAPE1(na1value));
+        return self;
+      }
+
+      # # #
+  end
+
+
+  def narray_2d_functions
+    {'set2i' => 'int', 'set2r' => 'double'}
+  end
+
+  def narray_2D_define_method(func)
+    %Q|  rb_define_module_function(mMagicsRaw, "mag_#{func}_narray", r_#{func}_narray, 2);\n|
+  end
+
+
+
   def array_1d_string_func(func)
     <<-"# # #".gsub(/^\s{6}/,"")
       VALUE r_#{func}_array(VALUE self, VALUE param, VALUE c1value, VALUE ivalue )
@@ -192,6 +238,9 @@ class RMagicsRawCWriter
   def write
     File.open(@c_file,'w') do |f|
       f << %Q{#include <string.h> \n#include <ruby.h> \n\n}
+      if @with_narray
+        f << %Q{#include <narray.h>  \n\n} 
+      end
       f << %Q{static VALUE mMagics; \nstatic VALUE mMagicsRaw;\n\n}
       simple_func_list.each {|s| f << simple_func(s)}
       one_string_arg_func_list.each {|s| f << one_string_arg_func(s)}
@@ -201,7 +250,14 @@ class RMagicsRawCWriter
       array_1d_functions.each {|s| f << array_1d_func(s)}      
       array_1d_string_functions.each {|s| f << array_1d_string_func(s)}      
       array_2d_functions.each {|s| f << array_2d_func(s)}      
-
+      if @with_narray
+        narray_1d_functions.each do |func,type|
+          f << narray_1d_func(func, type) 
+        end
+        narray_2d_functions.each do |func,type|
+          f << narray_2d_func(func, type) 
+        end
+      end
       f << write_module_begin 
       simple_func_list.each {|s| f << simple_func_define_method(s)}
       one_string_arg_func_list.each do |s| 
@@ -213,10 +269,13 @@ class RMagicsRawCWriter
       array_1d_functions.each {|s| f << array_1D_define_method(s)}
       array_1d_string_functions.each {|s| f << array_1D_string_define_method(s)}
       array_2d_functions.each {|s| f << array_2D_define_method(s)}
+      if @with_narray
+        narray_1d_functions.each {|s,v| f << narray_1D_define_method(s)} 
+        narray_2d_functions.each {|s,v| f << narray_2D_define_method(s)} 
+      end
       f << write_module_end 
     end
   end
 end
 
 
-RMagicsRawCWriter.new.write

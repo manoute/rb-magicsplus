@@ -56,6 +56,7 @@ module MagicsPlus
     def set_ary(str,ary)
       array_check(ary)
       @params[str] = ary.raw_params[:params] 
+      
       Raw.send(ary.raw_params[:name],str, *params[str])
       self
     end
