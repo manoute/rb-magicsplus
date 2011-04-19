@@ -116,10 +116,11 @@ class RMagicsRawCWriter
 
   def narray_1d_func(func,type)
     <<-"# # #".gsub(/^\s{6}/,"")
-      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE na1value)
+      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE navalue)
       {
+
         mag_#{func} (StringValuePtr(param), 
-          NA_PTR_TYPE(na1value, #{type}*), NA_SHAPE0(na1value));
+          NA_PTR_TYPE(navalue, #{type}*), NA_SHAPE0(navalue));
         return self;
       }
 
@@ -137,11 +138,11 @@ class RMagicsRawCWriter
 
   def narray_2d_func(func,type)
     <<-"# # #".gsub(/^\s{6}/,"")
-      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE na2value)
+      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE navalue)
       {
         mag_#{func} (StringValuePtr(param), 
-          NA_PTR_TYPE(na2value, #{type}*), 
-          NA_SHAPE0(na2value), NA_SHAPE1(na2value));
+          NA_PTR_TYPE(navalue, #{type}*), 
+          NA_SHAPE0(navalue), NA_SHAPE1(navalue));
         return self;
       }
 
@@ -156,6 +157,36 @@ class RMagicsRawCWriter
   def narray_2D_define_method(func)
     %Q|  rb_define_module_function(mMagicsRaw, "mag_#{func}_narray", r_#{func}_narray, 2);\n|
   end
+
+
+  def narray_1d_string_func(func)
+    <<-"# # #".gsub(/^\s{6}/,"")
+      VALUE r_#{func}_narray(VALUE self, VALUE param, VALUE navalue)
+      {
+
+        int size = NA_SHAPE0(navalue);
+        int i;
+        char **c1array = (char **) malloc((size+1)*sizeof(char *));
+        VALUE *p;
+        p = NA_PTR_TYPE(navalue,VALUE*);
+        for (i=0; i < size; i++, p++) {
+          c1array[i] = StringValuePtr(*p);
+        }
+        mag_#{func} (StringValuePtr(param), c1array, size);
+        return self;
+      }
+
+      # # #
+  end
+
+  def narray_1d_string_functions
+    %w{set1c}
+  end
+
+  def narray_1D_string_define_method(func)
+    %Q|  rb_define_module_function(mMagicsRaw, "mag_#{func}_narray", r_#{func}_narray, 2);\n|
+  end
+
 
 
 
@@ -257,6 +288,7 @@ class RMagicsRawCWriter
         narray_2d_functions.each do |func,type|
           f << narray_2d_func(func, type) 
         end
+        narray_1d_string_functions.each {|s| f << narray_1d_string_func(s)}      
       end
       f << write_module_begin 
       simple_func_list.each {|s| f << simple_func_define_method(s)}
@@ -272,6 +304,7 @@ class RMagicsRawCWriter
       if @with_narray
         narray_1d_functions.each {|s,v| f << narray_1D_define_method(s)} 
         narray_2d_functions.each {|s,v| f << narray_2D_define_method(s)} 
+        narray_1d_string_functions.each {|s| f << narray_1D_string_define_method(s)}
       end
       f << write_module_end 
     end

@@ -3,6 +3,9 @@ module MagPlus
     module NArray
       def raw_params
         case
+        when self[0].is_a?(String) 
+          {:name => 'mag_set1c_narray', 
+            :params => [self]}
         when self.dim == 1 && self.typecode == 3
           {:name => 'mag_set1i_narray', 
             :params => [self]}
@@ -15,8 +18,6 @@ module MagPlus
         when self.dim == 2 && self.typecode == 5 
           {:name => 'mag_set2r_narray', 
             :params => [self]}
-        when self[0].is_a?(String) 
-          :set1c
         else
           raise TypeError, "This array can't be used with magics_api."
         end
@@ -24,6 +25,8 @@ module MagPlus
  
       def magics_set_name
         case
+        when self[0].is_a?(String) 
+          :set_ary
         when self.dim == 1 && self.typecode == 3
           :set_ary
         when self.dim == 1 && self.typecode == 5
@@ -32,8 +35,6 @@ module MagPlus
           :set_ary
         when self.dim == 2 && self.typecode == 5 
           :set_ary
-        when self[0].is_a?(String) 
-          :set1c
         else
           raise TypeError, "This array can't be used with magics_api."
         end

@@ -26,8 +26,11 @@ describe MagicsPlus::Base do
       data = []
       (0..180).each {|i| data << (360.times.inject([]){|r,e| r << (e*1.0)})}
 
-      set2d_helper({:output_file => @output_file, 
-                    :data => data})
+      levels = 360.times.inject([]) {|a,e| a << (160.0 + e/4.0)}
+      colors = 360.times.inject([]) {|a,e| a << "HSL(#{e}, 0.5, 0.5)"}
+
+      set2d_helper({:output_file => @output_file, :levels => levels, 
+                    :colors => colors, :data => data})
       @output_file.should be_the_same_ps_file(@array2D_file)
     end
   end

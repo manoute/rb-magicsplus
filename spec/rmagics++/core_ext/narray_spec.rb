@@ -29,8 +29,13 @@ if narray_installed
         data = NArray.float(360,181)
         (0..180).each {|j| (0...360).each {|i| data[i,j] = i }}
 
-        set2d_helper({:output_file => @output_file, 
-                      :data => data})
+        levels = NArray.float(360)
+        360.times {|e| levels[e] = (160.0 + e/4.0)}
+        colors = NArray.object(360)
+        360.times {|i| colors[i] = "HSL(#{i}, 0.5, 0.5)"}
+        set2d_helper({:output_file => @output_file, :levels => levels, 
+                      :colors => colors, :data => data})
+
         @output_file.should be_the_same_ps_file(@array2D_file)
       end
     end

@@ -66,15 +66,12 @@ def set2d_helper(options)
     m.contour_shade = "on"
     m.contour_shade_method = "area_fill"
 
-    levels = 360.times.inject([]) {|a,e| a << (160.0 + e/4.0)}
-    colors = 360.times.inject([]) {|a,e| a << "HSL(#{e}, 0.5, 0.5)"}
-
     m.contour_level_selection_type =  "level_list"
     m.contour_shade = "on"
     m.contour_shade_method = "area_fill"
     m.contour_shade_colour_method = "list"
-    m.contour_level_list =  levels
-    m.contour_shade_colour_list = colors
+    m.contour_level_list =  options[:levels]
+    m.contour_shade_colour_list = options[:colors]
 
     m.cont 
     m.coast
