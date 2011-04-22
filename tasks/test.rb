@@ -4,13 +4,13 @@ require 'rspec/core/rake_task'
 namespace :test do 
 
   desc "Generate data needed for rspec then run rspec"
-  task :all => [:generale_all_ps_files, :spec]
+  task :all => [:generate_all_ps_files, :spec]
 
   desc "Run specs"
   RSpec::Core::RakeTask.new 
 
   desc "Generate all ps file needed for tests"
-  task :generale_all_ps_files => [:generate_simple, :generate_symb, 
+  task :generate_all_ps_files => [:generate_simple, :generate_symb, 
                                   :generate_2d]
 
   desc "Generate simple.ps" 
