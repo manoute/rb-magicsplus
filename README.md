@@ -48,6 +48,7 @@ FEATURES
 
   - After close, all parameters are reset to their default values, to avoid this behaviour, use close(false) or open(false) do ... end.
 
+
 ** Blocks can be given to open, enabling automatic close :**
 
         MagicsPlus::Base.open do |m|
@@ -110,7 +111,7 @@ Plotting an array of data
     require 'rmagics++'
 
     MagicsPlus::Base.open do |m|
-     mc.setc("output_fullname",'2D.ps')
+     m.setc("output_fullname",'2D.ps')
 
       # Block syntax
       m.new_subpage do |sub|
@@ -141,7 +142,7 @@ Plotting an array of data
 Using module as a mixing and plotting a grib file
 
     require 'rubygems' # optional, only with ruby 1.8.7
-    require 'ffi-magics++'
+    require 'rmagics++'
 
     class Toto
       include MagicsPlus::Base
@@ -180,7 +181,6 @@ REQUIREMENTS
 * 'rake' is optional
 * 'rspec' is optional 
 * 'rake-compiler' is optional
-* 'echoe' is optionnal
 
 INSTALL
 -------
@@ -191,7 +191,7 @@ If you want narray :
 
 Then :
 
-    [sudo] gem install rmagics++
+    [sudo] gem install rb-magicsplus
 
  
 RUNNING SPECS/TESTS
@@ -200,18 +200,21 @@ RUNNING SPECS/TESTS
 'rspec' (version 2.xxx), 'rake'  and 'rake-compiler' are needed.
 You may also have to had gem executable directory to $PATH (For exemple with debian ruby 1.8.7: export PATH=$PATH:/var/lib/gems/1.8/bin)
 
-Somewhere within source tree :
-* compile C extension :
 
-    [RUBYOPT='rubygems'] rake compile
+      git clone git://github.com/manoute/rb-magicsplus.git
+      cd rb-magicsplus
+
+* Compile C extension :
+
+      [RUBYOPT='rubygems'] rake compile
     
 * Generate .ps files needed using C api :
 
-    [RUBYOPT='rubygems'] rake test:generale_all_ps_files
+      [RUBYOPT='rubygems'] rake test:generate_all_ps_files
 
 * Run rspec :
 
-    [RUBYOPT='rubygems'] rake test:spec
+      [RUBYOPT='rubygems'] rake test:spec
 
 LICENSE
 -------

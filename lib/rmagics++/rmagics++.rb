@@ -17,7 +17,6 @@ module MagicsPlus
 
   module Base
     module_function
-    VERSION = '0.1.1'
     attr_accessor :params
     module_function :params
 
