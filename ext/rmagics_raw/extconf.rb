@@ -35,21 +35,12 @@ LIB_DIRS = [
   '/usr/lib',
 ]
  
-# Search gem narray if gem is installed
-#if system("which gem > /dev/null 2>&1") && (`gem list`.include? 'narray')
-#  LIB_DIRS <<  File.dirname(`gem which narray`)
-#end
-#LIB_DIRS << '/home/manoute/.rvm/gems/ruby-1.9.2-p180@rmagics/gems/narray-0.5.9.9'
-
 dir_config('rmagics++', header_dirs, LIB_DIRS)
-#dir_config('narray', header_dirs, LIB_DIRS)
-
 
 unless find_header('narray.h')
   puts "narray.h not found, building extension without narray support."
   with_narray = false
 end
-
 
 unless find_header('magics_api.h')
   abort "Can't find headers file magics_api.h..."
@@ -58,7 +49,6 @@ end
 #$LDFLAGS += ' ' + `pkg-config --libs magics`
 $LDFLAGS += ' ' + `magics-config --libs`
 $CPPFLAGS += ' ' + `magics-config --cxxflags` 
-
 
 RMagicsRawCWriter.new(with_narray).write
 create_makefile("rmagics_raw")
