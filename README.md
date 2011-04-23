@@ -8,7 +8,9 @@ DESCRIPTION
 Ruby wrappers for magics++.
 [Magics++](http://www.ecmwf.int/products/data/software/magics++.html) is the latest generation of the [ECMWF](http://www.ecmwf.int)'s Meteorological plotting software.
 
+
 Works with Ruby 1.8.7 or 1.9.2 and Rubinius, but not with Jruby and others ruby implementations that don't support C extensions written for Ruby (for these, you can try ffi-magics++... however, this last gem is not always working...).
+
 
 FEATURES
 --------
@@ -50,8 +52,7 @@ FEATURES
   - After close, all parameters are reset to their default values, to avoid this behaviour, use close(false) or open(false) do ... end.
 
 
-
-** Blocks can be given to open, enabling automatic close :**
+**Blocks can be given to open, enabling automatic close :**
 
         MagicsPlus::Base.open do |m|
           m.setc('output_filename','foo')
@@ -59,11 +60,13 @@ FEATURES
           m.coast
         end 
 
-** Setting parameter can be done with = :**
+
+**Setting parameter can be done with = :**
 
         MagicsPlus::Base.subpage_upper_right_latitude = 30.0
 
-** A hash and block can be given to methods :**
+
+**A hash and block can be given to methods :**
         
         # C-api like
         MagicsPlus::Base.setr('subpage_upper_right_latitude',30.0)
@@ -80,7 +83,7 @@ FEATURES
           c.subpage_upper_right_longitude = 30.0
         end
 
-** params hash is filled with the settings :**
+**params hash is filled with the settings :**
 
         MagicsPlus::Base.open
         MagicsPlus::Base.subpage_lower_left_latitude = 30.0
@@ -88,7 +91,7 @@ FEATURES
         MagicsPlus::Base.reset_all # reset all parameters to their default value
         MagicsPlus::Base.params #  {}
     
-** Works with ruby array or narray :**
+**Works with ruby array or narray :**
     
         # With Ruby array
         MagicsPlus::Base.foo = [44.0, 51.0,52.0,53.0]
@@ -102,6 +105,8 @@ PROBLEMS
 Experimental.
 
 Only tested with Magics++ Debian package and custom Archlinux package.
+
+If you have any questions, issues and/or ideas, please e-mail to me.
 
 
 EXAMPLES
