@@ -1,4 +1,4 @@
-module MagPlus
+module MagicsPlus
   module CoreExtensions
     module Float
       def magics_set_name
@@ -9,7 +9,7 @@ module MagPlus
 end
 
 class Float
-  include(MagPlus::CoreExtensions::Float)
+  include(MagicsPlus::CoreExtensions::Float)
 end
 
 

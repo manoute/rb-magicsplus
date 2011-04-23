@@ -1,4 +1,4 @@
-module MagPlus
+module MagicsPlus
   module CoreExtensions
     module NArray
       def raw_params
@@ -45,7 +45,7 @@ module MagPlus
 end
 
 class NArray
-  include(MagPlus::CoreExtensions::NArray)
+  include(MagicsPlus::CoreExtensions::NArray)
 end
 
 

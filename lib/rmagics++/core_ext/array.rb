@@ -1,4 +1,4 @@
-module MagPlus
+module MagicsPlus
   module CoreExtensions
     module Array
       def raw_params
@@ -44,7 +44,7 @@ module MagPlus
 end
 
 class Array
-  include(MagPlus::CoreExtensions::Array)
+  include(MagicsPlus::CoreExtensions::Array)
 end
 
 

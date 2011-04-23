@@ -7,7 +7,8 @@ DESCRIPTION
 
 Ruby wrappers for magics++.
 [Magics++](http://www.ecmwf.int/products/data/software/magics++.html) is the latest generation of the [ECMWF](http://www.ecmwf.int)'s Meteorological plotting software.
-Works with Ruby 1.8.7 or 1.9.2 and Rubinius, but not with Jruby and others ruby implementations that don't support C extensions written for Ruby (for these, you can try ffi-magics++ that use ffi... however, this last gem is not always working...)
+
+Works with Ruby 1.8.7 or 1.9.2 and Rubinius, but not with Jruby and others ruby implementations that don't support C extensions written for Ruby (for these, you can try ffi-magics++... however, this last gem is not always working...).
 
 FEATURES
 --------
@@ -209,13 +210,16 @@ You may also have to had gem executable directory to $PATH (For exemple with deb
 
         [RUBYOPT='rubygems'] rake compile
     
-* Generate .ps files needed using C api :
+* Generate .ps files using Magics++ C api :
 
         [RUBYOPT='rubygems'] rake test:generate_all_ps_files
 
 * Run rspec :
 
         [RUBYOPT='rubygems'] rake test:spec
+
+* If there is no problem, you can build the gem and install it.
+
 
 LICENSE
 -------

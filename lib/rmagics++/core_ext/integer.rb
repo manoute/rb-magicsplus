@@ -1,4 +1,4 @@
-module MagPlus
+module MagicsPlus
   module CoreExtensions
     module Integer
       def magics_set_name
@@ -10,7 +10,7 @@ module MagPlus
 end
 
 class Integer
-  include(MagPlus::CoreExtensions::Integer)
+  include(MagicsPlus::CoreExtensions::Integer)
 end
 
 

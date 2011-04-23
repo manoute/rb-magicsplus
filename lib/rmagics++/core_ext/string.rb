@@ -1,4 +1,4 @@
-module MagPlus
+module MagicsPlus
   module CoreExtensions
     module String
       def magics_set_name
@@ -10,7 +10,7 @@ module MagPlus
 end
 
 class String
-  include(MagPlus::CoreExtensions::String)
+  include(MagicsPlus::CoreExtensions::String)
 end
 
 
