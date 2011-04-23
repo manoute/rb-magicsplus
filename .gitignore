@@ -8,6 +8,5 @@
 /doc
 *.rbc
 *.o
-*.gemspec
 .autotest
 tmp

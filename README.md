@@ -49,6 +49,7 @@ FEATURES
   - After close, all parameters are reset to their default values, to avoid this behaviour, use close(false) or open(false) do ... end.
 
 
+
 ** Blocks can be given to open, enabling automatic close :**
 
         MagicsPlus::Base.open do |m|
@@ -194,8 +195,8 @@ Then :
     [sudo] gem install rb-magicsplus
 
  
-RUNNING SPECS/TESTS
--------------------
+SPECS/TESTS
+-----------
 
 'rspec' (version 2.xxx), 'rake'  and 'rake-compiler' are needed.
 You may also have to had gem executable directory to $PATH (For exemple with debian ruby 1.8.7: export PATH=$PATH:/var/lib/gems/1.8/bin)
@@ -206,15 +207,15 @@ You may also have to had gem executable directory to $PATH (For exemple with deb
 
 * Compile C extension :
 
-      [RUBYOPT='rubygems'] rake compile
+        [RUBYOPT='rubygems'] rake compile
     
 * Generate .ps files needed using C api :
 
-      [RUBYOPT='rubygems'] rake test:generate_all_ps_files
+        [RUBYOPT='rubygems'] rake test:generate_all_ps_files
 
 * Run rspec :
 
-      [RUBYOPT='rubygems'] rake test:spec
+        [RUBYOPT='rubygems'] rake test:spec
 
 LICENSE
 -------
